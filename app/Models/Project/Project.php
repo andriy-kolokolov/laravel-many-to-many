@@ -19,12 +19,6 @@ class Project extends Model
         return $this->belongsToMany(ProjectProgrammingLanguages::class, 'project_language', 'project_id', 'language_id');
     }
 
-    // Define the relationship with frameworks
-    public function frameworks()
-    {
-        return $this->hasMany(ProjectFrameworks::class);
-    }
-
     public function types()
     {
         return $this->hasMany(ProjectType::class);

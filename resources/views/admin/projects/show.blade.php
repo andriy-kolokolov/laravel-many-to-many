@@ -23,10 +23,6 @@
                         <strong>Programming Languages:</strong>
                         {{ implode(', ', $project->programmingLanguages->pluck('programming_language')->toArray()) }}
                     </div>
-                    <div class="mb-4">
-                        <strong>Frameworks:</strong>
-                        {{ implode(', ', $project->frameworks()->pluck('framework')->toArray()) }}
-                    </div>
                     <a href="{{ route('admin.projects.index') }}">
                         <button class="mt-3 btn btn-primary mt-2 mb-4">Back to Projects</button>
                     </a>

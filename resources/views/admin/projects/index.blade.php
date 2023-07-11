@@ -13,7 +13,7 @@
     @endif
     @if (session('success'))
         <div class="alert alert-success">
-            Project "{{ session('success') }}" was added successfully.
+            Project "{{ session('success')->title }}" was added successfully.
         </div>
     @endif
 
@@ -23,7 +23,6 @@
             <th class="col-1">Title</th>
             <th class="col-2">Type <br><span class="text-success">(one-to-many)</span></th>
             <th class="col-2">Programming Languages <br><span class="text-success">(many-to-many)</span></th>
-            <th class="col-1">Frameworks <br><span class="text-success">(one-to-many)</span></th>
             <th class="col-2">Description</th>
             <th class="col-1">Project URL</th>
             <th class="col">Actions</th>
@@ -43,12 +42,6 @@
 {{--                    {{ $project->programmingLanguages->pluck('programming_language')->implode(', ') }}--}}
                     @foreach($project->programmingLanguages as $language)
                         {{ $language->programming_language }}<br>
-                    @endforeach
-                </td>
-                <td class="text-align text-center">
-{{--                    {{ $project->frameworks->pluck('framework')->implode(', ') }}--}}
-                    @foreach($project->frameworks as $framework)
-                        {{ $framework->framework }}<br>
                     @endforeach
                 </td>
                 <td class="text-align">{{ $project->description }}</td>

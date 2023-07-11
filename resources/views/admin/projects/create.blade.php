@@ -40,15 +40,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="frameworks">Frameworks:</label>
-                            <input type="text" class="form-control" id="frameworks" name="frameworks">
-                            @error('frameworks')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="description">Description:</label>
                             <textarea class="form-control" id="description" name="description"></textarea>
                             @error('description')

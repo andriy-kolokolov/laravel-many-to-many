@@ -51,17 +51,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="frameworks">Frameworks</label>
-                            <input type="text" name="frameworks" id="frameworks" class="form-control"
-                                   value="{{ implode(', ', $project->frameworks()->pluck('framework')->toArray()) }}">
-                            @error('frameworks')
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
                             <label for="description">Description</label>
                             <textarea name="description" id="description" class="form-control" rows="4"
                                       required>{{ $project->description }}</textarea>
