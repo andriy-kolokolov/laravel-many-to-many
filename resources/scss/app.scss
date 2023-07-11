@@ -1,0 +1,21 @@
+@use "partials/variables";
+@import "~bootstrap/scss/bootstrap";
+
+.nav-link {
+    &.active {
+        color: crimson;
+    }
+}
+
+.vh-100 {
+    height: 100vh;
+}
+
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.text-align {
+    vertical-align: middle;
+}
