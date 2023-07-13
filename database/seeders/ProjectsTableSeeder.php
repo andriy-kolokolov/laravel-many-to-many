@@ -63,38 +63,6 @@ class ProjectsTableSeeder extends Seeder
             ],
         ]);
 
-//        // Seed project_frameworks table
-//        DB::table('projects_frameworks')->insert([
-//            [
-//                'project_id' => 1,
-//                'framework' => 'Vue.js',
-//            ],
-//            [
-//                'project_id' => 2,
-//                'framework' => 'Hibernate',
-//            ],
-//            [
-//                'project_id' => 2,
-//                'framework' => 'MySQL',
-//            ],
-//            [
-//                'project_id' => 2,
-//                'framework' => 'Maven',
-//            ],
-//            [
-//                'project_id' => 2,
-//                'framework' => 'JDBC',
-//            ],
-//            [
-//                'project_id' => 4,
-//                'framework' => 'Laravel',
-//            ],
-//            [
-//                'project_id' => 4,
-//                'framework' => 'Bootstrap',
-//            ],
-//        ]);
-
         // Seed relational table 'project_language'
         DB::table('project_language')->insert([
             [
@@ -148,6 +116,61 @@ class ProjectsTableSeeder extends Seeder
             [
                 'project_id' => 4,
                 'type' => 'Full Stack',
+            ],
+        ]);
+
+        // Seed project_frameworks table
+        DB::table('technologies')->insert([
+            [
+                'name' => 'Vue.js',
+            ],
+            [
+                'name' => 'Hibernate',
+            ],
+            [
+                'name' => 'MySQL',
+            ],
+            [
+                'name' => 'Maven',
+            ],
+            [
+                'name' => 'JDBC',
+            ],
+            [
+                'name' => 'Laravel',
+            ],
+            [
+                'name' => 'Bootstrap',
+            ],
+        ]);
+
+        DB::table('project_technology')->insert([
+            [
+                'project_id' => 1,
+                'technology_id' => 1,
+            ],
+            [
+                'project_id' => 2,
+                'technology_id' => 2,
+            ],
+            [
+                'project_id' => 2,
+                'technology_id' => 3,
+            ],
+            [
+                'project_id' => 2,
+                'technology_id' => 4,
+            ],
+            [
+                'project_id' => 2,
+                'technology_id' => 6,
+            ],
+            [
+                'project_id' => 4,
+                'technology_id' => 2,
+            ],[
+                'project_id' => 4,
+                'technology_id' => 7,
             ],
         ]);
     }
