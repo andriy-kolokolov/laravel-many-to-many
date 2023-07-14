@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project\Project;
+use App\Models\Project\ProjectLanguage;
 use App\Models\Project\ProjectProgrammingLanguages;
 use App\Models\Project\ProjectType;
 use App\Models\Project\Technology;
@@ -69,18 +70,23 @@ class ProjectsController extends Controller
         // Process programming languages
         $programmingLanguages = preg_split('/[\s,]+/', $validatedData['programming_languages']);
         $programmingLanguageIds = [];
+
         foreach ($programmingLanguages as $programmingLanguage) {
-            $programmingLanguage = ProjectProgrammingLanguages::firstOrCreate(['programming_language' => trim($programmingLanguage)]);
-            $programmingLanguageIds[] = $programmingLanguage->id;
+            $existingProgrammingLanguage = ProjectProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
+
+            if (!$existingProgrammingLanguage) {
+                $programmingLanguageModel = new ProjectProgrammingLanguages();
+                $programmingLanguageModel->programming_language = $programmingLanguage;
+                $programmingLanguageModel->save();
+                $programmingLanguageIds[] = $programmingLanguageModel->id;
+            } else {
+                $programmingLanguageIds[] = $existingProgrammingLanguage->id;
+            }
         }
         $project->programmingLanguages()->sync($programmingLanguageIds);
 
         // Process technologies
-        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']); //"Hibernate, Bootstrap, Vue JS, Laravel"
-        $technologiesIds = [];
-
-        // Process technologies
-        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']); //"Hibernate, Bootstrap, Vue JS, Laravel"
+        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']);
         $technologiesIds = [];
 
         foreach ($technologies as $technology) {
@@ -111,6 +117,7 @@ class ProjectsController extends Controller
         return redirect()->route('admin.projects.index')->with('success', $project);
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -140,31 +147,55 @@ class ProjectsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Project $project)
     {
         $validatedData = $request->validate($this->validations, $this->validation_messages);
 
-        // Find the project by its ID
-        $project = Project::findOrFail($id);
+        // Update the existing project instance with the validated data
         $project->title = $validatedData['title'];
         $project->description = $validatedData['description'];
         $project->project_url = $validatedData['project_url'];
-        $project->update();
+        $project->save();
 
         // Process programming languages
-        $programmingLanguages = explode(',', $validatedData['programming_languages']);
-        // Remove existing programming languages for the project
-        $project->programmingLanguages()->detach();
-        // Add the new programming languages for the project
-        foreach ($programmingLanguages as $language) {
-            $programmingLanguage = ProjectProgrammingLanguages::firstOrCreate(['programming_language' => trim($language)]);
-            $project->programmingLanguages()->attach($programmingLanguage->id);
+        $programmingLanguages = preg_split('/[\s,]+/', $validatedData['programming_languages']);
+        $programmingLanguageIds = [];
+
+        foreach ($programmingLanguages as $programmingLanguage) {
+            $existingProgrammingLanguage = ProjectProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
+
+            if (!$existingProgrammingLanguage) {
+                $programmingLanguageModel = new ProjectProgrammingLanguages();
+                $programmingLanguageModel->programming_language = $programmingLanguage;
+                $programmingLanguageModel->save();
+                $programmingLanguageIds[] = $programmingLanguageModel->id;
+            } else {
+                $programmingLanguageIds[] = $existingProgrammingLanguage->id;
+            }
         }
+        $project->programmingLanguages()->sync($programmingLanguageIds);
+
+        // Process technologies
+        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']);
+        $technologiesIds = [];
+
+        foreach ($technologies as $technology) {
+            $existingTechnology = Technology::where('name', $technology)->first();
+
+            if (!$existingTechnology) {
+                $technologyModel = new Technology();
+                $technologyModel->name = $technology;
+                $technologyModel->save();
+                $technologiesIds[] = $technologyModel->id;
+            } else {
+                $technologiesIds[] = $existingTechnology->id;
+            }
+        }
+        $project->technologies()->sync($technologiesIds);
 
         // Process types if provided
         if (!empty($validatedData['type'])) {
-            $types = explode(',', $validatedData['type']);
-            ProjectType::where('project_id', $project->id)->delete();
+            $types = preg_split('/[\s,]+/', $validatedData['type']);
             foreach ($types as $type) {
                 $projectType = new ProjectType();
                 $projectType->project_id = $project->id;
@@ -173,7 +204,7 @@ class ProjectsController extends Controller
             }
         }
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully!');
+        return redirect()->route('admin.projects.index')->with('success', $project);
     }
 
     /**

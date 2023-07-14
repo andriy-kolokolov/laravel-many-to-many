@@ -51,6 +51,19 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="technologies">Technologies</label>
+                            <input type="text" name="technologies" id="technologies"
+                                   class="form-control"
+                                   value="{{ implode(', ', $project->technologies()->pluck('name')->toArray()) }}"
+                                   required>
+                            @error('technologies')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="description">Description</label>
                             <textarea name="description" id="description" class="form-control" rows="4"
                                       required>{{ $project->description }}</textarea>
