@@ -1,177 +1,98 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProjectsTableSeeder extends Seeder
-{
+class ProjectsTableSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
+        // Seed types table
+        DB::table('types')->insert([
+            ['name' => 'Front End'],
+            ['name' => 'Back End'],
+            ['name' => 'Full Stack'],
+        ]);
+
         // Seed projects table
-        DB::table('projects')->insert([
+        $projects = [
             [
                 'title' => 'boolzap',
+                'type_id' => 1,
                 'description' => 'Whatsup clone using VUE JS',
                 'project_url' => 'https://github.com/andriy-kolokolov/vue-boolzapp',
             ],
             [
                 'title' => 'Java CRUD and tests',
+                'type_id' => 2,
                 'description' => 'Used DAO (Data Access Object) Pattern. CRUD methods and tests JAVA HIBERNATE',
                 'project_url' => 'https://github.com/andriy-kolokolov/java-hibernate-jdbc-database-manager',
             ],
             [
                 'title' => 'Java Roman Calculator',
+                'type_id' => 2,
                 'description' => 'Just a simple Roman calculator using a hashmap to convert an integer to a Roman numeral. Inspired to create it after completing the LeetCode task "https://leetcode.com/problems/roman-to-integer/"',
                 'project_url' => 'https://github.com/andriy-kolokolov/java-roman-calculator',
             ],
             [
                 'title' => 'Todo List Teamwork',
-                'description' => 'This project focuses on teamwork and GIT version control. This is a Simple Todo List manager. ',
+                'type_id' => 3,
+                'description' => 'This project focuses on teamwork and GIT version control. This is a Simple Todo List manager.',
                 'project_url' => 'https://github.com/alessandropecchini99/laravel-boolean',
             ],
-        ]);
+        ];
 
-        // Seed project_programming_languages table
-        DB::table('projects_programming_languages')->insert([
-            [
-                'programming_language' => 'JS',
-            ],
-            [
-                'programming_language' => 'HTML',
-            ],
-            [
-                'programming_language' => 'SASS',
-            ],
-            [
-                'programming_language' => 'Java',
-            ],
-            [
-                'programming_language' => 'Java',
-            ],
-            [
-                'programming_language' => 'Blade',
-            ],
-            [
-                'programming_language' => 'PHP',
-            ],
-        ]);
+        foreach ($projects as $project) {
+            $projectId = DB::table('projects')->insertGetId([
+                'title' => $project['title'],
+                'type_id' => $project['type_id'],
+                'description' => $project['description'],
+                'project_url' => $project['project_url'],
+            ]);
 
-        // Seed relational table 'project_language'
-        DB::table('project_language')->insert([
-            [
-                'project_id' => 1,
-                'language_id' => 1,
-            ],
-            [
-                'project_id' => 1,
-                'language_id' => 2,
-            ],
-            [
-                'project_id' => 1,
-                'language_id' => 3,
-            ],
-            [
-                'project_id' => 2,
-                'language_id' => 4,
-            ],
-            [
-                'project_id' => 3,
-                'language_id' => 4,
-            ],
-            [
-                'project_id' => 4,
-                'language_id' => 6,
-            ],
-            [
-                'project_id' => 4,
-                'language_id' => 7,
-            ],
-        ]);
+            // Seed project_programming_languages table
+            $programmingLanguages = [
+                'JS',
+                'HTML',
+                'SASS',
+            ];
 
-        // Seed project_types table
-        DB::table('project_types')->insert([
-            [
-                'project_id' => 1,
-                'type' => 'Front End',
-            ],
-            [
-                'project_id' => 2,
-                'type' => 'Back End',
-            ],
-            [
-                'project_id' => 3,
-                'type' => 'Back End',
-            ],
-            [
-                'project_id' => 4,
-                'type' => 'Web App Dev',
-            ],
-            [
-                'project_id' => 4,
-                'type' => 'Full Stack',
-            ],
-        ]);
+            foreach ($programmingLanguages as $programmingLanguage) {
+                $programmingLanguageId = DB::table('programming_languages')->insertGetId([
+                    'name' => $programmingLanguage,
+                ]);
 
-        // Seed project_frameworks table
-        DB::table('technologies')->insert([
-            [
-                'name' => 'Vue.js',
-            ],
-            [
-                'name' => 'Hibernate',
-            ],
-            [
-                'name' => 'MySQL',
-            ],
-            [
-                'name' => 'Maven',
-            ],
-            [
-                'name' => 'JDBC',
-            ],
-            [
-                'name' => 'Laravel',
-            ],
-            [
-                'name' => 'Bootstrap',
-            ],
-        ]);
+                DB::table('project_programming_language')->insert([
+                    'project_id' => $projectId,
+                    'programming_language_id' => $programmingLanguageId,
+                ]);
+            }
 
-        DB::table('project_technology')->insert([
-            [
-                'project_id' => 1,
-                'technology_id' => 1,
-            ],
-            [
-                'project_id' => 2,
-                'technology_id' => 2,
-            ],
-            [
-                'project_id' => 2,
-                'technology_id' => 3,
-            ],
-            [
-                'project_id' => 2,
-                'technology_id' => 4,
-            ],
-            [
-                'project_id' => 2,
-                'technology_id' => 6,
-            ],
-            [
-                'project_id' => 4,
-                'technology_id' => 2,
-            ],[
-                'project_id' => 4,
-                'technology_id' => 7,
-            ],
-        ]);
+            // Seed project_technology table
+            $technologies = [
+                'Vue.js',
+                'Hibernate',
+                'MySQL',
+                'Maven',
+                'JDBC',
+                'Bootstrap',
+            ];
+
+            foreach ($technologies as $technology) {
+                $technologyId = DB::table('technologies')->insertGetId([
+                    'name' => $technology,
+                ]);
+
+                DB::table('project_technology')->insert([
+                    'project_id' => $projectId,
+                    'technology_id' => $technologyId,
+                ]);
+            }
+        }
     }
 }

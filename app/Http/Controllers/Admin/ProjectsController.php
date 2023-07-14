@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project\Project;
 use App\Models\Project\ProgrammingLanguage;
-use App\Models\Project\ProgrammingLanguages;
 use App\Models\Project\Type;
 use App\Models\Project\Technology;
 use Illuminate\Http\Request;
@@ -16,8 +15,8 @@ class ProjectsController extends Controller
     private array $validations = [
         'title' => 'required|string|min:5|max:50',
         'type' => 'nullable|string',
-        'programming_languages' => 'required|string|max:500',
-        'technologies' => 'string|max:500',
+        'programming_language' => 'required|string|max:500',
+        'technology' => 'string|max:500',
         'description' => 'nullable',
         'project_url' => 'required|url|max:600',
     ];
