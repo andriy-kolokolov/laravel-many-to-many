@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\ProjectsController;
+use App\Http\Controllers\Admin\TechnologiesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Guests\PageController as GuestsPageController;
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [AdminPageController::class, 'dashboard'])->name('dashboard');
         Route::resource('posts', PostsController::class);
         Route::resource('projects', ProjectsController::class);
+        Route::resource('technologies', TechnologiesController::class);
     });
 
 Route::middleware('auth')

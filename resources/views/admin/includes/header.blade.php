@@ -35,6 +35,13 @@
                         </ul>
                     </li>
 
+                    <!--    TECHNOLOGIES    -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.technologies.index') }}">
+                            Technologies
+                        </a>
+                    </li>
+
                 </ul>
 
                 <ul class="navbar-nav mb-2 mb-lg-0">

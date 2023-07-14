@@ -40,6 +40,15 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="technologies">Technologies:</label>
+                            <input type="text" class="form-control" id="technologies" name="technologies" required>
+                            @error('technologies')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="description">Description:</label>
                             <textarea class="form-control" id="description" name="description"></textarea>
                             @error('description')

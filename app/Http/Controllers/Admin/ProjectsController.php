@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project\Project;
 use App\Models\Project\ProjectProgrammingLanguages;
 use App\Models\Project\ProjectType;
+use App\Models\Project\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -15,6 +16,7 @@ class ProjectsController extends Controller
         'title' => 'required|string|min:5|max:50',
         'type' => 'nullable|string',
         'programming_languages' => 'required|string|max:500',
+        'technologies' => 'string|max:500',
         'description' => 'nullable',
         'project_url' => 'required|url|max:600',
     ];
@@ -67,22 +69,33 @@ class ProjectsController extends Controller
         // Process programming languages
         $programmingLanguages = preg_split('/[\s,]+/', $validatedData['programming_languages']);
         $programmingLanguageIds = [];
-        foreach ($programmingLanguages as $language) {
-            $programmingLanguage = ProjectProgrammingLanguages::firstOrCreate(['programming_language' => trim($language)]);
+        foreach ($programmingLanguages as $programmingLanguage) {
+            $programmingLanguage = ProjectProgrammingLanguages::firstOrCreate(['programming_language' => trim($programmingLanguage)]);
             $programmingLanguageIds[] = $programmingLanguage->id;
         }
         $project->programmingLanguages()->sync($programmingLanguageIds);
 
-//        // Process frameworks if provided
-//        if (!empty($validatedData['frameworks'])) {
-//            $frameworks = preg_split('/[\s,]+/', $validatedData['frameworks']);
-//            foreach ($frameworks as $framework) {
-//                $projectFramework = new ProjectFrameworks();
-//                $projectFramework->project_id = $project->id;
-//                $projectFramework->framework = trim($framework);
-//                $projectFramework->save();
-//            }
-//        }
+        // Process technologies
+        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']); //"Hibernate, Bootstrap, Vue JS, Laravel"
+        $technologiesIds = [];
+
+        // Process technologies
+        $technologies = preg_split('/[\s,]+/', $validatedData['technologies']); //"Hibernate, Bootstrap, Vue JS, Laravel"
+        $technologiesIds = [];
+
+        foreach ($technologies as $technology) {
+            $existingTechnology = Technology::where('name', $technology)->first();
+
+            if (!$existingTechnology) {
+                $technologyModel = new Technology();
+                $technologyModel->name = $technology;
+                $technologyModel->save();
+                $technologiesIds[] = $technologyModel->id;
+            } else {
+                $technologiesIds[] = $existingTechnology->id;
+            }
+        }
+        $project->technologies()->sync($technologiesIds);
 
         // Process types if provided
         if (!empty($validatedData['type'])) {
@@ -148,18 +161,6 @@ class ProjectsController extends Controller
             $project->programmingLanguages()->attach($programmingLanguage->id);
         }
 
-        // Process frameworks if provided
-//        if (!empty($validatedData['frameworks'])) {
-//            $frameworks = explode(',', $validatedData['frameworks']);
-//            ProjectFrameworks::where('project_id', $project->id)->delete(); // Remove existing frameworks
-//            foreach ($frameworks as $framework) {
-//                $projectFramework = new ProjectFrameworks();
-//                $projectFramework->project_id = $project->id;
-//                $projectFramework->framework = trim($framework);
-//                $projectFramework->save();
-//            }
-//        }
-
         // Process types if provided
         if (!empty($validatedData['type'])) {
             $types = explode(',', $validatedData['type']);
@@ -183,7 +184,14 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
+        $technologies = $project->technologies;
+        $project->technologies()->detach();
+        foreach ($technologies as $technology) {
+            $technology->projects()->detach();
+            $technology->delete();
+        }
         $project->delete();
+
         return to_route('admin.projects.index')->with('delete_success', $project);
     }
 }

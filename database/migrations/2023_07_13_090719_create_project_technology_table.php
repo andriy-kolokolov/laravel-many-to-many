@@ -12,6 +12,8 @@ return new class extends Migration {
      */
     public function up() {
         Schema::create('project_technology', function (Blueprint $table) {
+            $table->increments('id');
+
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('technology_id');
 

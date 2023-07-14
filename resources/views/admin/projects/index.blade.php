@@ -23,6 +23,7 @@
             <th class="col-1">Title</th>
             <th class="col-2">Type <br><span class="text-success">(one-to-many)</span></th>
             <th class="col-2">Programming Languages <br><span class="text-success">(many-to-many)</span></th>
+            <th class="col-1">Technologies <br><span class="text-success">(many-to-many)</span></th>
             <th class="col-2">Description</th>
             <th class="col-1">Project URL</th>
             <th class="col">Actions</th>
@@ -42,6 +43,11 @@
 {{--                    {{ $project->programmingLanguages->pluck('programming_language')->implode(', ') }}--}}
                     @foreach($project->programmingLanguages as $language)
                         {{ $language->programming_language }}<br>
+                    @endforeach
+                </td>
+                <td class="text-align text-center">
+                    @foreach($project->technologies as $technology)
+                        {{ $technology->name }}<br>
                     @endforeach
                 </td>
                 <td class="text-align">{{ $project->description }}</td>
