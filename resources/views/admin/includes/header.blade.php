@@ -42,6 +42,13 @@
                         </a>
                     </li>
 
+                    <!--    Types    -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.types.index') }}">
+                            Types
+                        </a>
+                    </li>
+
                 </ul>
 
                 <ul class="navbar-nav mb-2 mb-lg-0">

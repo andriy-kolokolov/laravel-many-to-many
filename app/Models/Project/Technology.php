@@ -11,7 +11,4 @@ class Technology extends Model
     public $timestamps = false;
     protected $fillable = ['project_id', 'technology'];
 
-    public function projects() {
-        return $this->belongsToMany(Project::class);
-    }
 }
