@@ -29,8 +29,8 @@
                         <div class="form-group">
                             <label for="type">Type</label>
                             <input type="text" name="type" id="type" class="form-control"
-                                   value="{{ implode(', ', $project->types()->pluck('type')->toArray()) }}">
-                            @error('title')
+                                   value="{{ $project->types()->first()->type ?? '' }}">
+                            @error('type')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>

@@ -105,13 +105,11 @@ class ProjectsController extends Controller
 
         // Process types if provided
         if (!empty($validatedData['type'])) {
-            $types = preg_split('/[\s,]+/', $validatedData['type']);
-            foreach ($types as $type) {
-                $projectType = new ProjectType();
-                $projectType->project_id = $project->id;
-                $projectType->type = trim($type);
-                $projectType->save();
-            }
+            $type = trim($validatedData['type']);
+            $projectType = new ProjectType();
+            $projectType->project_id = $project->id;
+            $projectType->type = $type;
+            $projectType->save();
         }
 
         return redirect()->route('admin.projects.index')->with('success', $project);
@@ -195,12 +193,17 @@ class ProjectsController extends Controller
 
         // Process types if provided
         if (!empty($validatedData['type'])) {
-            $types = preg_split('/[\s,]+/', $validatedData['type']);
-            foreach ($types as $type) {
-                $projectType = new ProjectType();
-                $projectType->project_id = $project->id;
-                $projectType->type = trim($type);
+            $type = trim($validatedData['type']);
+            $projectType = ProjectType::where('project_id', $project->id)->first();
+
+            if ($projectType) {
+                $projectType->type = $type;
                 $projectType->save();
+            } else {
+                $newProjectType = new ProjectType();
+                $newProjectType->project_id = $project->id;
+                $newProjectType->type = $type;
+                $newProjectType->save();
             }
         }
 
