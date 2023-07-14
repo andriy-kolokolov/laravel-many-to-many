@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Project\ProjectType;
+use App\Models\Project\Type;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
@@ -15,7 +15,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = ProjectType::paginate(10);
+        $types = Type::paginate(10);
         return view('admin.types.index', compact('types'));
     }
 
@@ -80,7 +80,7 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProjectType $projectType)
+    public function destroy(Type $projectType)
     {
         $projectType->delete();
         return to_route('admin.types.index')->with('delete_success', $projectType);

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project\Project;
-use App\Models\Project\ProjectLanguage;
-use App\Models\Project\ProjectProgrammingLanguages;
-use App\Models\Project\ProjectType;
+use App\Models\Project\ProgrammingLanguage;
+use App\Models\Project\ProgrammingLanguages;
+use App\Models\Project\Type;
 use App\Models\Project\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -72,10 +72,10 @@ class ProjectsController extends Controller
         $programmingLanguageIds = [];
 
         foreach ($programmingLanguages as $programmingLanguage) {
-            $existingProgrammingLanguage = ProjectProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
+            $existingProgrammingLanguage = ProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
 
             if (!$existingProgrammingLanguage) {
-                $programmingLanguageModel = new ProjectProgrammingLanguages();
+                $programmingLanguageModel = new ProgrammingLanguages();
                 $programmingLanguageModel->programming_language = $programmingLanguage;
                 $programmingLanguageModel->save();
                 $programmingLanguageIds[] = $programmingLanguageModel->id;
@@ -106,7 +106,7 @@ class ProjectsController extends Controller
         // Process types if provided
         if (!empty($validatedData['type'])) {
             $type = trim($validatedData['type']);
-            $projectType = new ProjectType();
+            $projectType = new Type();
             $projectType->project_id = $project->id;
             $projectType->type = $type;
             $projectType->save();
@@ -160,10 +160,10 @@ class ProjectsController extends Controller
         $programmingLanguageIds = [];
 
         foreach ($programmingLanguages as $programmingLanguage) {
-            $existingProgrammingLanguage = ProjectProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
+            $existingProgrammingLanguage = ProgrammingLanguages::where('programming_language', $programmingLanguage)->first();
 
             if (!$existingProgrammingLanguage) {
-                $programmingLanguageModel = new ProjectProgrammingLanguages();
+                $programmingLanguageModel = new ProgrammingLanguages();
                 $programmingLanguageModel->programming_language = $programmingLanguage;
                 $programmingLanguageModel->save();
                 $programmingLanguageIds[] = $programmingLanguageModel->id;
@@ -194,13 +194,13 @@ class ProjectsController extends Controller
         // Process types if provided
         if (!empty($validatedData['type'])) {
             $type = trim($validatedData['type']);
-            $projectType = ProjectType::where('project_id', $project->id)->first();
+            $projectType = Type::where('project_id', $project->id)->first();
 
             if ($projectType) {
                 $projectType->type = $type;
                 $projectType->save();
             } else {
-                $newProjectType = new ProjectType();
+                $newProjectType = new Type();
                 $newProjectType->project_id = $project->id;
                 $newProjectType->type = $type;
                 $newProjectType->save();
