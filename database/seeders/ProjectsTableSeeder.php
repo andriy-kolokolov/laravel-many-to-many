@@ -3,6 +3,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProjectsTableSeeder extends Seeder
 {
@@ -22,33 +23,43 @@ class ProjectsTableSeeder extends Seeder
 
         DB::table('types')->insert($types);
 
+
         // Seed projects table
         $projects = [
             [
                 'title' => 'boolzap',
                 'type_id' => 1,
+                'slug' =>  Str::slug('boolzap'),
                 'description' => 'Whatsup clone using VUE JS',
                 'project_url' => 'https://github.com/andriy-kolokolov/vue-boolzapp',
             ],
             [
                 'title' => 'Java CRUD and tests',
                 'type_id' => 2,
+                'slug' =>  Str::slug('Java CRUD and tests'),
                 'description' => 'Used DAO (Data Access Object) Pattern. CRUD methods and tests JAVA HIBERNATE',
                 'project_url' => 'https://github.com/andriy-kolokolov/java-hibernate-jdbc-database-manager',
             ],
             [
                 'title' => 'Java Roman Calculator',
                 'type_id' => 2,
+                'slug' =>  Str::slug('Java Roman Calculator'),
                 'description' => 'Just a simple Roman calculator using a hashmap to convert an integer to a Roman numeral. Inspired to create it after completing the LeetCode task "https://leetcode.com/problems/roman-to-integer/"',
                 'project_url' => 'https://github.com/andriy-kolokolov/java-roman-calculator',
             ],
             [
                 'title' => 'Todo List Teamwork',
                 'type_id' => 3,
+                'slug' => Str::slug('Todo List Teamwork'),
                 'description' => 'This project focuses on teamwork and GIT version control. This is a Simple Todo List manager. ',
                 'project_url' => 'https://github.com/alessandropecchini99/laravel-boolean',
             ],
         ];
+
+        // ADD SLUGER
+        foreach ($projects as $project) {
+            $project['slug'] = Str::slug($project['title']);
+        }
 
         foreach ($projects as $project) {
             $projectId = DB::table('projects')->insertGetId($project);

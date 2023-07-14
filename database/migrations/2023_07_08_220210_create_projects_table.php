@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('title', 50);
+            $table->string('slug', 100)->unique();
             $table->text('description')->nullable();
             $table->string('project_url', 600);
 
