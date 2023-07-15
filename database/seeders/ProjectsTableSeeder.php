@@ -1,6 +1,8 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Project\ProgrammingLanguage;
+use App\Models\Project\Project;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -14,15 +16,32 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed types table
         $types = [
             ['name' => 'Front End'],
             ['name' => 'Back End'],
             ['name' => 'Full Stack'],
         ];
-
         DB::table('types')->insert($types);
 
+        $programmingLanguages = [
+            ['name' => 'JS'],
+            ['name' => 'HTML'],
+            ['name' => 'SASS'],
+            ['name' => 'PHP'],
+            ['name' => 'JAVA'],
+        ];
+        DB::table('programming_languages')->insert($programmingLanguages);
+
+        $technologies = [
+            ['name' => 'Vue.js'],
+            ['name' => 'Hibernate'],
+            ['name' => 'MySQL'],
+            ['name' => 'Maven'],
+            ['name' => 'JDBC'],
+            ['name' => 'Bootstrap'],
+            ['name' => 'Laravel'],
+        ];
+        DB::table('technologies')->insert($technologies);
 
         // Seed projects table
         $projects = [
@@ -56,45 +75,31 @@ class ProjectsTableSeeder extends Seeder
             ],
         ];
 
-        // ADD SLUGER
-        foreach ($projects as $project) {
-            $project['slug'] = Str::slug($project['title']);
+//        for ($i = 0; $i < count($projects); $i++)
+        foreach ($projects as $project){
+            Project::create([
+                'title' => $project['title'],
+                'type_id' => $project['type_id'],
+                'slug' => Str::slug($project['title']),
+                'description' => $project['description'],
+                'project_url' => $project['project_url'],
+            ]);
         }
 
-        foreach ($projects as $project) {
-            $projectId = DB::table('projects')->insertGetId($project);
+        $project1 = Project::find(1);
+        $project2 = Project::find(2);
+        $project3 = Project::find(3);
+        $project4 = Project::find(4);
 
-            // Seed project_programming_languages table
-            $programmingLanguages = ['JS', 'HTML', 'SASS'];
+        $project1->programmingLanguages()->sync([1, 2, 3]);
+        $project2->programmingLanguages()->sync(5);
+        $project3->programmingLanguages()->sync(5);
+        $project4->programmingLanguages()->sync([3, 4]);
 
-            foreach ($programmingLanguages as $programmingLanguage) {
-                $programmingLanguageId = DB::table('programming_languages')->insertGetId([
-                    'name' => $programmingLanguage,
-                ]);
+        $project1->technologies()->sync([1, 6]);
+        $project2->technologies()->sync([2, 3, 4, 5]);
+        $project3->technologies()->sync(5);
+        $project4->technologies()->sync([3, 6, 7]);
 
-                DB::table('project_programming_language')->insert([
-                    'project_id' => $projectId,
-                    'programming_language_id' => $programmingLanguageId,
-                ]);
-            }
-
-            // Seed project_technology table
-            $technologies = ['Vue.js', 'Hibernate', 'MySQL', 'Maven', 'JDBC', 'Bootstrap'];
-
-            foreach ($technologies as $technology) {
-                $technologyId = DB::table('technologies')->where('name', $technology)->value('id');
-
-                if (!$technologyId) {
-                    $technologyId = DB::table('technologies')->insertGetId([
-                        'name' => $technology,
-                    ]);
-                }
-
-                DB::table('project_technology')->insert([
-                    'project_id' => $projectId,
-                    'technology_id' => $technologyId,
-                ]);
-            }
-        }
     }
 }

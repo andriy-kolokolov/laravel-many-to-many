@@ -31,18 +31,14 @@
         </thead>
         <tbody>
         @foreach($projects as $project)
-            <tr class="">
+            <tr>
                 <td class="text-align text-center fw-bold fs-6">{{ $project->title }}</td>
                 <td class="text-align text-center">
-{{--                    {{ $project->types->pluck('type')->implode(', ') }}--}}
-                    @foreach($project->types as $type)
-                        {{ $type->type }}<br>
-                    @endforeach
+                    {{ $project->type->name }}
                 </td>
                 <td class="text-align text-center">
-{{--                    {{ $project->programmingLanguages->pluck('programming_language')->implode(', ') }}--}}
                     @foreach($project->programmingLanguages as $language)
-                        {{ $language->programming_language }}<br>
+                        {{ $language->name }}<br>
                     @endforeach
                 </td>
                 <td class="text-align text-center">
