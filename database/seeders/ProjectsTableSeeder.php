@@ -33,13 +33,13 @@ class ProjectsTableSeeder extends Seeder
         DB::table('programming_languages')->insert($programmingLanguages);
 
         $technologies = [
-            ['name' => 'Vue.js'],
-            ['name' => 'Hibernate'],
-            ['name' => 'MySQL'],
-            ['name' => 'Maven'],
+            ['name' => 'VUE.JS'],
+            ['name' => 'HIBERNATE'],
+            ['name' => 'MYSQL'],
+            ['name' => 'MAVEN'],
             ['name' => 'JDBC'],
-            ['name' => 'Bootstrap'],
-            ['name' => 'Laravel'],
+            ['name' => 'BOOTSTRAP'],
+            ['name' => 'LARAVEL'],
         ];
         DB::table('technologies')->insert($technologies);
 
