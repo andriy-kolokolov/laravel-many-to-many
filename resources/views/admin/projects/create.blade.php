@@ -33,12 +33,19 @@
 {{--                        </div>--}}
 
                         <div class="form-group mb-3">
-                            <label for="type">Type:</label>
-                            <input type="text" class="form-control" id="type" name="type" value="{{ old('title') }}">
+                            <label for="type">Project type:</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="">Select a project type..</option>
+                                @foreach ($types as $type)
+                                    <option value="{{ $type['name'] }}" {{ old('type') == $type['name'] ? 'selected' : '' }}>
+                                        {{ $type['name'] }}
+                                    </option>
+                                @endforeach
+                            </select>
                             @error('type')
-                                <div class="text-danger">
-                                    {{ $message }}
-                                </div>
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
 

@@ -10,14 +10,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectsController extends Controller {
 
     private array $validations = [
         'title' => 'required|string|min:5|max:50',
-        'type' => 'string|max:50',
+        'type' => 'required|string',
         'programming_languages' => 'string|max:500',
         'technologies' => 'string|max:500',
         'description' => 'nullable',
@@ -48,7 +47,8 @@ class ProjectsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -64,18 +64,21 @@ class ProjectsController extends Controller {
 
         //        $imgPath = Storage::put('uploads', $data['image']);
 
+        // get type id (one to many)
+        $type_id = DB::table('types')->where('name', $data['type'])->value('id');
+
         $newProject = new Project();
         $newProject->title = $data['title'];
+        $newProject->type_id = $type_id;
         $newProject->slug = Str::slug($data['title']);
         $newProject->description = $data['description'];
         $newProject->project_url = $data['project_url'];
         $newProject->save();
 
-
         // PROCESS PROGRAMMING LANGUAGES
         $newProjectLanguageIds = [];
-
         $inputProgrammingLanguages = explode(',', $data['programming_languages']); // convert from input string to array
+
         foreach ($inputProgrammingLanguages as $language) {
             $language = trim(strtoupper($language));
             $existingLanguage = DB::table('programming_languages')
@@ -91,11 +94,10 @@ class ProjectsController extends Controller {
         }
         $newProject->programmingLanguages()->sync($newProjectLanguageIds);
 
-
         // PROCESS TECHNOLOGIES
         $newProjectTechnologyIds = [];
-
         $inputTechnologies = explode(',', $data['technologies']); // convert from input string to array
+
         foreach ($inputTechnologies as $technology) {
             $technology = trim(strtoupper($technology));
             $existingTechnology = DB::table('technologies')
