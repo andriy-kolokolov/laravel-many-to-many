@@ -71,7 +71,10 @@ class ProjectsController extends Controller {
         $newProject->project_url = $data['project_url'];
         $newProject->save();
 
+
         // PROCESS PROGRAMMING LANGUAGES
+        $newProjectLanguageIds = [];
+
         $inputProgrammingLanguages = explode(',', $data['programming_languages']); // convert from input string to array
         foreach ($inputProgrammingLanguages as $language) {
             $language = trim(strtoupper($language));
@@ -80,14 +83,18 @@ class ProjectsController extends Controller {
                 ->first();
 
             if ($existingLanguage) {
-                $newProject->programmingLanguages()->sync($existingLanguage->id);
+                $newProjectLanguageIds[] = $existingLanguage->id;
             } else {
                 $newLanguageId = DB::table('programming_languages')->insertGetId(['name' => $language]);
-                $newProject->programmingLanguages()->sync([$newLanguageId]);
+                $newProjectLanguageIds[] = $newLanguageId;
             }
         }
+        $newProject->programmingLanguages()->sync($newProjectLanguageIds);
 
-        // PROCESS PROGRAMMING LANGUAGES
+
+        // PROCESS TECHNOLOGIES
+        $newProjectTechnologyIds = [];
+
         $inputTechnologies = explode(',', $data['technologies']); // convert from input string to array
         foreach ($inputTechnologies as $technology) {
             $technology = trim(strtoupper($technology));
@@ -96,12 +103,13 @@ class ProjectsController extends Controller {
                 ->first();
 
             if ($existingTechnology) {
-                $newProject->programmingLanguages()->sync($existingTechnology->id);
+                $newProjectTechnologyIds[] = $existingTechnology->id;
             } else {
                 $newTechnologyId = DB::table('technologies')->insertGetId(['name' => $technology]);
-                $newProject->programmingLanguages()->sync([$newTechnologyId]);
+                $newProjectTechnologyIds[] = $newTechnologyId;
             }
         }
+        $newProject->technologies()->sync($newProjectTechnologyIds);
 
         return redirect()->route('admin.projects.index')->with('success', $newProject);
     }
