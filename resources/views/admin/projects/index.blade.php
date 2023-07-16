@@ -4,7 +4,14 @@
 @php
 //dd($projects);
 @endphp
-    <h1>Projects</h1>
+    <div class="d-flex align-items-center">
+        <h1>Projects</h1>
+        <div class="icon_plus ms-3">
+            <a class="text-dark" href="{{ route('admin.projects.create') }}">
+                <i class="fa-sharp fa-solid fa-plus"></i>
+            </a>
+        </div>
+    </div>
 {{--    @php $project = session('delete_success') @endphp   --}}
     @if (session('delete_success'))
         <div class="alert alert-danger">
@@ -17,7 +24,7 @@
         </div>
     @endif
 
-    <table class="table table-secondary table-hover table-rounded">
+    <table class="table table-striped table-rounded">
         <thead>
         <tr class="fs-5 text-center text-align">
             <th class="col-1">Title</th>
@@ -46,7 +53,15 @@
                         {{ $technology->name }}<br>
                     @endforeach
                 </td>
-                <td class="text-align">{{ $project->description }}</td>
+                <td class="text-align">
+                    @if (strlen($project->description) > 50)
+                        <div type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->description }}">
+                            <p class="text-center fw-bold">hover for description</p>
+                        </div>
+                    @else
+                        <p class="text-center">{{ $project->description }}</p>
+                    @endif
+                </td>
                 <td class="text-align text-center"><a href="{{ $project->project_url }}" target="_blank">Show on GitHub</a></td>
                 <!--    CRUD ACTIONS     -->
                 <td class="text-align text-center">

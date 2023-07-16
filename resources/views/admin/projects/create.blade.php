@@ -22,16 +22,6 @@
                             @enderror
                         </div>
 
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-control" for="image">Upload project image: </label>--}}
-{{--                            <input type="file" class="form-control" id="image" name="image" accept="image/*">--}}
-{{--                            @error('image')--}}
-{{--                            <div class="invalid-feedback">--}}
-{{--                                {{ $message }}--}}
-{{--                            </div>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-
                         <div class="form-group mb-3">
                             <label for="type">Project type:</label>
                             <select class="form-control" id="type" name="type">

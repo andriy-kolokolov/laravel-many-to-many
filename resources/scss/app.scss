@@ -1,6 +1,10 @@
 @use "partials/variables";
 @import "~bootstrap/scss/bootstrap";
 
+$fa-font-path: "/node_modules/@fortawesome/fontawesome-free/webfonts";
+@import 'node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+
+
 .nav-link {
     &.active {
         color: crimson;
@@ -19,3 +23,32 @@
 .text-align {
     vertical-align: middle;
 }
+
+.icon_plus {
+    font-size: 40px;
+    height: 40px;
+    aspect-ratio: 1 / 1;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 800;
+    background-color: variables.$my_primary;
+    padding: 10px;
+    opacity: .7;
+    transition: .3s;
+    cursor: pointer;
+
+    i {
+        transform: translate(-5%, -55%);
+        transition: .3s;
+    }
+
+    &:hover {
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+
+        i {
+            color: white;
+        }
+    }
+}
+
