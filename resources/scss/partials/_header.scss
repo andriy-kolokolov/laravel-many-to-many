@@ -3,9 +3,10 @@
 .admin-header {
     display: flex;
     justify-content: space-between;
-    height: 75px;
+    height: $header-height;
     padding: 0;
     margin: 0;
+    background-color: white;
 
     .header-brand {
         display: flex;
@@ -16,6 +17,10 @@
 
         a {
             text-decoration: none;
+
+            .img-logo {
+                height: $header-height;
+            }
         }
     }
     .navbar {
@@ -27,6 +32,7 @@
 
             .navbar-nav {
                 height: 100%;
+                background-color: white;
 
                 .nav-item {
                     height: 100%;
@@ -34,21 +40,21 @@
                     transition: .35s;
 
                     &.active {
-                        color: $my_color_primary;
-                        border-bottom: 5px solid $my_color_primary;
+                        color: $my-color-primary;
+                        border-bottom: 5px solid $my-color-primary;
 
                         .nav-link {
-                            color: $my_color_primary;
+                            color: $my-color-primary;
                             scale: 1.05;
                         }
                     }
 
                     &:hover {
-                        border-bottom: 5px solid $my_color_primary;
+                        border-bottom: 5px solid $my-color-primary;
 
                         .nav-link {
-                            color: $my_color_primary;
-                            scale: 1.05;
+                            color: $my-color-primary;
+                            //scale: 1.05;
                         }
                     }
 

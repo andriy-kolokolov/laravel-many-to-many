@@ -2,7 +2,9 @@
 
 <header class="shadow mb-4 admin-header container-fluid">
     <div class="header-brand">
-        <a href="{{ route('admin.dashboard') }}">AK</a>
+        <a href="{{ route('admin.dashboard') }}">
+            <img class="img-logo" src="{{ asset('images/logo.png') }}" alt="logo image">
+        </a>
     </div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
 {{--            <a class="navbar-brand fw-bold" href="{{ route('guests.home') }}">BOOLPRESS</a>--}}
@@ -39,10 +41,8 @@
                         </a>
                     </li>
 
-                </ul>
-
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
+                    <!--    Admin profile edit    -->
+                    <li class="nav-item dropdown {{ request()->is('admin/profile*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ $user->name }}
                         </a>
@@ -58,6 +58,11 @@
                             </li>
                         </ul>
                     </li>
+
+                </ul>
+
+                <ul class="navbar-nav mb-2 mb-lg-0">
+
                 </ul>
         </div>
     </nav>

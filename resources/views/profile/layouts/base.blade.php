@@ -24,6 +24,8 @@
         </div>
     </main>
 
+    @include('admin.includes.footer')
+
 </body>
 </html>
 

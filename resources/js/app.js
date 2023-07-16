@@ -5,6 +5,7 @@ import.meta.glob([
     '../img/**'
 ]);
 import * as bootstrap from 'bootstrap';
+import './partials/footer.js'
 
 
 const confirmDelete = document.querySelector('#confirm-delete');

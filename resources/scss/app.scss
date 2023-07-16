@@ -1,4 +1,5 @@
 @use "partials/header";
+@use "partials/footer";
 @import "partials/variables";
 @import "~bootstrap/scss/bootstrap";
 
@@ -17,6 +18,11 @@ body {
     //font-family: 'Roboto Condensed', sans-serif;
     //font-family: 'Cabin', sans-serif;
 }
+
+.main-container {
+    margin-bottom: 75px;
+}
+
 .page-title {
     margin-left: 15px;
     margin-bottom: 0;
@@ -49,7 +55,7 @@ body {
     vertical-align: middle;
     text-align: center;
     font-weight: 800;
-    background-color: $my_color_primary;
+    background-color: $my-color-primary;
     padding: 10px;
     opacity: .8;
     transition: .3s;
@@ -73,7 +79,7 @@ body {
 
 .admin-action-buttons {
     .action-button {
-        color: $my_color_primary;
+        color: $my-color-primary;
 
         i {
             padding: 10px;

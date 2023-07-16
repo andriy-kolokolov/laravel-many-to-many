@@ -1,0 +1,32 @@
+@import "variables";
+
+.admin-footer {
+    height: $footer-height;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    transition: .5s;
+
+    .footer-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 20px;
+
+        i {
+            margin-inline: 5px;
+            font-size: 35px;
+            color: black;
+            opacity: .6;
+            transition: .3s;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

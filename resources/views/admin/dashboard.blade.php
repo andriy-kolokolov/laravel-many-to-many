@@ -4,8 +4,10 @@
 
 @section('contents')
 
-    <h2 class="">
-        Welcome , {{ $user->name }} !
-    </h2>
+    <div class="text-center text-align">
+        <h1 class="page-title">
+            Welcome , {{ $user->name }} !
+        </h1>
+    </div>
 
 @endsection
