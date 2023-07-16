@@ -11,7 +11,7 @@
                         <strong>Title:</strong> {{ $project->title }}
                     </div>
                     <div class="mb-4">
-                        <strong>Type:</strong> {{ implode(', ', $project->types->pluck('type')->toArray()) }}
+                        <strong>Type:</strong> {{ $project->type->name }}
                     </div>
                     <div class="mb-4">
                         <strong>Description:</strong> {{ $project->description }}
@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-4">
                         <strong>Programming Languages:</strong>
-                        {{ implode(', ', $project->programmingLanguages->pluck('programming_language')->toArray()) }}
+                        {{ implode(', ', $project->programmingLanguages->pluck('name')->toArray()) }}
                     </div>
                     <a href="{{ route('admin.projects.index') }}">
                         <button class="mt-3 btn btn-primary mt-2 mb-4">Back to Projects</button>

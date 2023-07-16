@@ -217,14 +217,7 @@ class ProjectsController extends Controller {
      * @return Response
      */
     public function destroy(Project $project) {
-        $technologies = $project->technologies;
-        $project->technologies()->detach();
-        foreach ($technologies as $technology) {
-            $technology->projects()->detach();
-            $technology->delete();
-        }
         $project->delete();
-
         return to_route('admin.projects.index')->with('delete_success', $project);
     }
 }

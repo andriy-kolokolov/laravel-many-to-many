@@ -15,8 +15,14 @@ return new class extends Migration {
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('programming_language_id');
 
-            $table->foreign('project_id')->references('id')->on('projects');
-            $table->foreign('programming_language_id')->references('id')->on('programming_languages');
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
+            $table->foreign('programming_language_id')
+                ->references('id')
+                ->on('programming_languages')
+                ->onDelete('cascade');
         });
     }
 
