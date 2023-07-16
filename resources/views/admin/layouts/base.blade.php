@@ -19,7 +19,7 @@
     @include('admin.includes.header')
 
     <main>
-        <div class="container">
+        <div class="container-fluid">
             @yield('contents')
         </div>
     </main>

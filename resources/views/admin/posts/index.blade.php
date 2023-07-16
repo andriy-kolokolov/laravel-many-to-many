@@ -1,9 +1,14 @@
 @extends('admin.layouts.base')
 
 @section('contents')
-
-    <h1>Projects</h1>
-
+    <div class="d-flex align-items-center">
+        <div class="icon_plus">
+            <a href="{{ route('admin.posts.create') }}">
+                <i class="fa-sharp fa-solid fa-plus"></i>
+            </a>
+        </div>
+        <h1 class="page-title">POSTS</h1>
+    </div>
     @if (session('delete_success'))
         @php $post = session('delete_success') @endphp
         <div class="alert alert-danger">
@@ -26,7 +31,7 @@
         </div>
     @endif --}}
 
-    <table class="table table-striped table-hover">
+    <table class="mt-5 table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">ID</th>

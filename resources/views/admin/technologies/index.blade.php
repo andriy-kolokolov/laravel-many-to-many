@@ -4,15 +4,22 @@
     @php
         //dd($projects);
     @endphp
-    <h1>My project Technologies</h1>
-    {{--    @php $project = session('delete_success') @endphp   --}}
+
+    <div class="d-flex align-items-center">
+        <div class="icon_plus">
+            <a class="text-dark" href="{{ route('admin.technologies.create') }}">
+                <i class="fa-sharp fa-solid fa-plus"></i>
+            </a>
+        </div>
+        <h1 class="page-title">TECHNOLOGIES</h1>
+    </div>
     @if (session('delete_success'))
         <div class="alert alert-danger">
             Technology "{{ session('delete_success')->name }}" was deleted.
         </div>
     @endif
 
-    <table class="table table-secondary table-hover table-rounded">
+    <table class="table table-striped table-hover table-bordered">
         <thead>
         <tr class="fs-5 text-center text-align">
             <th class="col">Title</th>

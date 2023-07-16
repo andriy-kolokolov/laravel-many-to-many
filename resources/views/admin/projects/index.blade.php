@@ -1,16 +1,13 @@
 @extends('admin.layouts.base')
 
 @section('contents')
-@php
-//dd($projects);
-@endphp
     <div class="d-flex align-items-center">
-        <h1>Projects</h1>
-        <div class="icon_plus ms-3">
-            <a class="text-dark" href="{{ route('admin.projects.create') }}">
+        <div class="icon_plus">
+            <a href="{{ route('admin.projects.create') }}">
                 <i class="fa-sharp fa-solid fa-plus"></i>
             </a>
         </div>
+        <h1 class="page-title">PROJECTS</h1>
     </div>
 {{--    @php $project = session('delete_success') @endphp   --}}
     @if (session('delete_success'))
@@ -27,12 +24,12 @@
     <table class="table table-striped table-rounded">
         <thead>
         <tr class="fs-5 text-center text-align">
-            <th class="col-1">Title</th>
-            <th class="col-2">Type <br><span class="text-success">(one-to-many)</span></th>
-            <th class="col-2">Programming Languages <br><span class="text-success">(many-to-many)</span></th>
-            <th class="col-1">Technologies <br><span class="text-success">(many-to-many)</span></th>
-            <th class="col-2">Description</th>
-            <th class="col-1">Project URL</th>
+            <th class="col">Title</th>
+            <th class="col">Type</th>
+            <th class="col">Programming Languages</th>
+            <th class="col">Technologies</th>
+            <th class="col">Description</th>
+            <th class="col">Project URL</th>
             <th class="col">Actions</th>
         </tr>
         </thead>
@@ -65,11 +62,19 @@
                 <td class="text-align text-center"><a href="{{ $project->project_url }}" target="_blank">Show on GitHub</a></td>
                 <!--    CRUD ACTIONS     -->
                 <td class="text-align text-center">
-                    <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}" class="btn btn-success btn-sm fs-6">View</a>
-                    <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-warning btn-sm fs-6">Edit</a>
-                    <button type="button" class="btn btn-danger js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $project->id }}">
-                        Delete
-                    </button>
+                    <div class="row justify-content-center align-items-center admin-action-buttons">
+                        <div class="col-2 action-button">
+                            <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}" class=""><i class="fa-solid fa-eye"></i></a>
+                        </div>
+                        <div class="col-2 action-button">
+                            <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class=""><i class="fa-solid fa-pen-to-square"></i></a>
+                        </div>
+                        <div class="col-2 action-button">
+                            <div type="button" class="js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $project->id }}">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         @endforeach

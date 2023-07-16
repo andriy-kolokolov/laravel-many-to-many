@@ -4,7 +4,14 @@
     @php
         //dd($projects);
     @endphp
-    <h1>My project Types</h1>
+    <div class="d-flex align-items-center">
+        <div class="icon_plus">
+            <a class="text-dark" href="{{ route('admin.types.create') }}">
+                <i class="fa-sharp fa-solid fa-plus"></i>
+            </a>
+        </div>
+        <h1 class="page-title">TYPES</h1>
+    </div>
     @if (session('delete_success'))
         <div class="alert alert-danger">
             Type "{{ session('delete_success')->type }}" was deleted.
