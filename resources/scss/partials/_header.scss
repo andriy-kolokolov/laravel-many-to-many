@@ -34,20 +34,20 @@
                     transition: .35s;
 
                     &.active {
-                        color: $my_primary;
-                        border-bottom: 5px solid $my_primary;
+                        color: $my_color_primary;
+                        border-bottom: 5px solid $my_color_primary;
 
                         .nav-link {
-                            color: $my_primary;
+                            color: $my_color_primary;
                             scale: 1.05;
                         }
                     }
 
                     &:hover {
-                        border-bottom: 5px solid $my_primary;
+                        border-bottom: 5px solid $my_color_primary;
 
                         .nav-link {
-                            color: $my_primary;
+                            color: $my_color_primary;
                             scale: 1.05;
                         }
                     }

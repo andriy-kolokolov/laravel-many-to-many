@@ -44,12 +44,12 @@ body {
 }
 
 .icon_plus {
-    height: 40px;
+    height: 30px;
     aspect-ratio: 1 / 1;
     vertical-align: middle;
     text-align: center;
     font-weight: 800;
-    background-color: $my_primary;
+    background-color: $my_color_primary;
     padding: 10px;
     opacity: .8;
     transition: .3s;
@@ -67,13 +67,13 @@ body {
         padding: 5px;
         color: white;
         transition: .3s;
-        font-size: 40px;
+        font-size: 25px;
     }
 }
 
 .admin-action-buttons {
     .action-button {
-        color: $my_primary;
+        color: $my_color_primary;
 
         i {
             padding: 10px;
