@@ -2,8 +2,13 @@
 
 @section('contents')
 
-    @include('admin.includes.page-sub-header', ['pageTitle' => 'POSTS'])
-
+    @include(
+    'admin.includes.page-sub-header',
+    [
+    'pageTitle' => 'POSTS',
+    'managingEntity' => 'post',
+    'addableEntity' => true
+    ])
     @if (session('delete_success'))
         @php $post = session('delete_success') @endphp
         <div class="alert alert-danger">
@@ -26,27 +31,49 @@
         </div>
     @endif --}}
 
-    <table class="mt-5 table table-striped table-hover">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Image url</th>
-                <th scope="col">Actions</th>
+                <th scope="col" class="col-3 text-center text-align">Title</th>
+                <th scope="col" class="text-center text-align">Image url</th>
+                <th scope="col" class="text-center text-align">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($posts as $post)
                 <tr>
-                    <th scope="row">{{ $post->id }}</th>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->url_image }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{{ route('admin.posts.show', ['post' => $post]) }}">View</a>
-                        <a class="btn btn-warning" href="{{ route('admin.posts.edit', ['post' => $post]) }}">Edit</a>
-                        <button type="button" class="btn btn-danger js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $post->id }}">
-                            Delete
-                        </button>
+                    <td class="text-center text-align fw-bold">{{ $post->title }}</td>
+                    <td class="text-center text-align">{{ $post->url_image }}</td>
+                    <!--    CRUD ACTIONS     -->
+                    <td class="text-align text-center d-flex justify-content-center">
+                        <div class="d-flex flex-row admin-action-buttons">
+                            <div class="action-button">
+                                <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     data-bs-title="Show post details">
+                                    <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="action-button">
+                                <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     data-bs-title="Edit post">
+                                    <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="action-button">
+                                <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     data-bs-title="Delete post">
+                                    <div type="button" class="js-delete" data-bs-toggle="modal"
+                                         data-bs-target="#deleteModal"
+                                         data-id="{{ $post->id }}">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

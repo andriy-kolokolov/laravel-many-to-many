@@ -20,10 +20,25 @@
                             Posts
                         </a>
                     </li>
+
                     <!--    PROJECTS    -->
                     <li class="nav-item {{ request()->is('admin/projects*') ? 'active' : '' }}">
                         <a class="nav-link " href="{{ route('admin.projects.index') }}">
                             Projects
+                        </a>
+                    </li>
+
+                    <!--    TYPES    -->
+                    <li class="nav-item {{ request()->is('admin/types*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.types.index') }}">
+                            Types
+                        </a>
+                    </li>
+
+                    <!--    PROGTAMMING LANGUAGES    -->
+                    <li class="nav-item {{ request()->is('admin/languages*') ? 'active' : '' }}">
+                        <a class="nav-link text-center" href="{{ route('admin.languages.index') }}">
+                            Languages
                         </a>
                     </li>
 
@@ -34,14 +49,7 @@
                         </a>
                     </li>
 
-                    <!--    Types    -->
-                    <li class="nav-item {{ request()->is('admin/types*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.types.index') }}">
-                            Types
-                        </a>
-                    </li>
-
-                    <!--    Admin profile edit    -->
+                    <!--    ADMIN PROFILE EDIT    -->
                     <li class="nav-item dropdown {{ request()->is('admin/profile*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ $user->name }}

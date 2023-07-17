@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\LanguagesController;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\ProjectsController;
 use App\Http\Controllers\Admin\TechnologiesController;
-use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Admin\TypesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Guests\PageController as GuestsPageController;
@@ -30,7 +31,8 @@ Route::middleware(['auth', 'verified'])
         Route::resource('posts', PostsController::class);
         Route::resource('projects', ProjectsController::class);
         Route::resource('technologies', TechnologiesController::class);
-        Route::resource('types', TypeController::class);
+        Route::resource('types', TypesController::class);
+        Route::resource('languages', LanguagesController::class);
     });
 
 Route::middleware('auth')

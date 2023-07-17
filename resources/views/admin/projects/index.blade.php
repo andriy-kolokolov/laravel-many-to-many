@@ -2,7 +2,13 @@
 
 @section('contents')
 
-    @include('admin.includes.page-sub-header', ['pageTitle' => 'PROJECTS'])
+    @include(
+    'admin.includes.page-sub-header',
+    ['pageTitle' => 'PROJECTS',
+     'managingEntity' => 'project',
+     'addableEntity' => true
+     ]
+    )
 
     @if (session('delete_success'))
         <div class="alert alert-danger">
@@ -44,7 +50,7 @@
                         {{ $technology->name }}
                     @endforeach
                 </td>
-                <td class="text-align">
+                <td class="text-align text-center">
                     @if (strlen($project->description) > 50)
                         <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                              data-bs-title="{{ $project->description }}">
