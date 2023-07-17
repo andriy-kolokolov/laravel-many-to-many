@@ -1,20 +1,9 @@
 @extends('admin.layouts.base')
 
 @section('contents')
-    <div class="d-flex flex-row justify-content-between">
-        <div class="d-flex align-items-center">
-            <h1 class="page-title">PROJECTS</h1>
-        </div>
-{{--            <h4 class="d-flex align-items-center m-0">Add project</h4>--}}
-            <div class="d-flex justify-content-center align-items-center" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add new project">
-                <div class="ms-3 icon_plus">
-                    <a href="{{ route('admin.projects.create') }}">
-                        <i class="fa-sharp fa-solid fa-plus"></i>
-                    </a>
-                </div>
-            </div>
-    </div>
-{{--    @php $project = session('delete_success') @endphp   --}}
+
+    @include('admin.includes.page-sub-header', ['pageTitle' => 'PROJECTS'])
+
     @if (session('delete_success'))
         <div class="alert alert-danger">
             Project "{{ session('delete_success')->title }}" was deleted.
@@ -26,7 +15,7 @@
         </div>
     @endif
 
-    <table class="table table-striped table-rounded">
+    <table class="table table-hover">
         <thead>
         <tr class="fs-5 text-center text-align">
             <th class="col">Title</th>
@@ -47,36 +36,59 @@
                 </td>
                 <td class="text-align text-center">
                     @foreach($project->programmingLanguages as $language)
-                        {{ $language->name }}<br>
+                        {{ $language->name }}
                     @endforeach
                 </td>
                 <td class="text-align text-center">
                     @foreach($project->technologies as $technology)
-                        {{ $technology->name }}<br>
+                        {{ $technology->name }}
                     @endforeach
                 </td>
                 <td class="text-align">
                     @if (strlen($project->description) > 50)
-                        <div type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->description }}">
+                        <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                             data-bs-title="{{ $project->description }}">
                             <p class="text-center fw-bold">hover for description</p>
                         </div>
                     @else
                         <p class="text-center">{{ $project->description }}</p>
                     @endif
                 </td>
-                <td class="text-align text-center"><a href="{{ $project->project_url }}" target="_blank">Show on GitHub</a></td>
-                <!--    CRUD ACTIONS     -->
                 <td class="text-align text-center">
-                    <div class="row justify-content-center align-items-center admin-action-buttons">
-                        <div class="col-2 action-button">
-                            <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}" class=""><i class="fa-solid fa-eye"></i></a>
+                    <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                         data-bs-title="{{ $project->project_url }}">
+                        <a href="{{ $project->project_url }}" target="_blank">Show on
+                            GitHub
+                        </a>
+                    </div>
+                </td>
+                <!--    CRUD ACTIONS     -->
+                <td class="text-align text-center d-flex justify-content-center">
+                    <div class="d-flex flex-row admin-action-buttons">
+                        <div class="action-button">
+                            <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                 data-bs-title="Show project details">
+                                <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}" class="">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-2 action-button">
-                            <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class=""><i class="fa-solid fa-pen-to-square"></i></a>
+                        <div class="action-button">
+                            <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                 data-bs-title="Edit project">
+                                <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-2 action-button">
-                            <div type="button" class="js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $project->id }}">
-                                <i class="fa-solid fa-trash-can"></i>
+                        <div class="action-button">
+                            <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                 data-bs-title="Delete project">
+                                <div type="button" class="js-delete" data-bs-toggle="modal"
+                                     data-bs-target="#deleteModal"
+                                     data-id="{{ $project->id }}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </div>
                             </div>
                         </div>
                     </div>

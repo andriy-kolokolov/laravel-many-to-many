@@ -1,14 +1,9 @@
 @extends('admin.layouts.base')
 
 @section('contents')
-    <div class="d-flex align-items-center">
-        <div class="icon_plus">
-            <a href="{{ route('admin.posts.create') }}">
-                <i class="fa-sharp fa-solid fa-plus"></i>
-            </a>
-        </div>
-        <h1 class="page-title">POSTS</h1>
-    </div>
+
+    @include('admin.includes.page-sub-header', ['pageTitle' => 'POSTS'])
+
     @if (session('delete_success'))
         @php $post = session('delete_success') @endphp
         <div class="alert alert-danger">

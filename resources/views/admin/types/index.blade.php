@@ -1,17 +1,9 @@
 @extends('admin.layouts.base')
 
 @section('contents')
-    @php
-        //dd($projects);
-    @endphp
-    <div class="d-flex align-items-center">
-        <div class="icon_plus">
-            <a class="text-dark" href="{{ route('admin.types.create') }}">
-                <i class="fa-sharp fa-solid fa-plus"></i>
-            </a>
-        </div>
-        <h1 class="page-title">TYPES</h1>
-    </div>
+
+    @include('admin.includes.page-sub-header', ['pageTitle' => 'TYPES'])
+
     @if (session('delete_success'))
         <div class="alert alert-danger">
             Type "{{ session('delete_success')->type }}" was deleted.
