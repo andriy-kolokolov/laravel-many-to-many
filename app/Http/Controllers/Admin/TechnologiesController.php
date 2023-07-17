@@ -7,6 +7,17 @@ use App\Models\Project\Technology;
 use Illuminate\Http\Request;
 
 class TechnologiesController extends Controller {
+
+    private array $validations = [
+        'name'     => 'required|string|min:5|max:100',
+    ];
+
+    private array $validation_messages = [
+        'required'  => 'The :attribute field is required',
+        'min'       => 'The :attribute field must be at least :min characters',
+        'max'       => 'The :attribute field cannot exceed :max characters',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +34,7 @@ class TechnologiesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
@@ -33,7 +44,14 @@ class TechnologiesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $request->validate($this->validations, $this->validation_messages);
+        $data = $request->all();
+
+        $newTechnology = new Technology();
+        $newTechnology->name = $data['name'];
+        $newTechnology->save();
+
+        return redirect()->route('admin.technologies.index')->with('success', $newTechnology);
     }
 
     /**

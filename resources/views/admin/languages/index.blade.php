@@ -10,6 +10,18 @@
     'addableEntity' => true
     ])
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            Language "{{ session('success')->name }}" was added successfully.
+        </div>
+    @endif
+
+    @if (session('delete_success'))
+        <div class="alert alert-danger">
+            Language "{{ session('delete_success')->name }}" was deleted.
+        </div>
+    @endif
+
     <table class="table table-hover">
         <thead>
             <tr class="fs-5 text-center text-align">
@@ -49,7 +61,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure?
+                    <span>DELETING LANGUAGE WILL DETACH IT FROM ALL PROJECTS THAT CONTAIN IT.</span>
+                    <br> <span class="text-danger fw-bold">ARE YOU SURE?</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>

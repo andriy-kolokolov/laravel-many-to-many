@@ -52,19 +52,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        // validare i dati del form
         $request->validate($this->validations, $this->validation_messages);
-
         $data = $request->all();
 
-        // salvare i dati nel db se validi
         $newPost = new Post();
         $newPost->title     = $data['title'];
         $newPost->url_image = $data['url_image'];
         $newPost->content   = $data['content'];
         $newPost->save();
 
-        // ridirezionare su una rotta di tipo get
         return to_route('admin.posts.show', ['post' => $newPost]);
     }
 

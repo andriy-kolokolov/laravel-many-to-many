@@ -7,6 +7,17 @@ use App\Models\Project\ProgrammingLanguage;
 use Illuminate\Http\Request;
 
 class LanguagesController extends Controller {
+
+    private array $validations = [
+        'name'     => 'required|string|min:5|max:100',
+    ];
+
+    private array $validation_messages = [
+        'required'  => 'The :attribute field is required',
+        'min'       => 'The :attribute field must be at least :min characters',
+        'max'       => 'The :attribute field cannot exceed :max characters',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +34,7 @@ class LanguagesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('admin.languages.create');
     }
 
     /**
@@ -33,7 +44,14 @@ class LanguagesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $request->validate($this->validations, $this->validation_messages);
+        $data = $request->all();
+
+        $newLanguage = new ProgrammingLanguage();
+        $newLanguage->name = $data['name'];
+        $newLanguage->save();
+
+        return redirect()->route('admin.languages.index')->with('success', $newLanguage);
     }
 
     /**
@@ -73,7 +91,9 @@ class LanguagesController extends Controller {
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy(ProgrammingLanguage $language) {
+        $language->projects()->detach();
+        $language->delete();
+        return to_route('admin.languages.index')->with('delete_success', $language);
     }
 }

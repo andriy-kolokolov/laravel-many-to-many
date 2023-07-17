@@ -54,7 +54,7 @@
                     @if (strlen($project->description) > 50)
                         <div type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                              data-bs-title="{{ $project->description }}">
-                            <p class="text-center fw-bold">hover for description</p>
+                            <p class="text-center fw-bold">hover for long description</p>
                         </div>
                     @else
                         <p class="text-center">{{ $project->description }}</p>

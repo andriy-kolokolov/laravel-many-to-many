@@ -9,6 +9,13 @@
     'managingEntity' => 'technology',
     'addableEntity' => true
     ])
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            Technology "{{ session('success')->name }}" was added successfully.
+        </div>
+    @endif
+
     @if (session('delete_success'))
         <div class="alert alert-danger">
             Technology "{{ session('delete_success')->name }}" was deleted.
