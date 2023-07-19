@@ -229,6 +229,9 @@ class ProjectsController extends Controller {
      * @return Response
      */
     public function destroy(Project $project) {
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
         $project->delete();
         return to_route('admin.projects.index')->with('delete_success', $project);
     }
