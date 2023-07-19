@@ -10,18 +10,19 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectsController extends Controller {
 
     private array $validations = [
+        'image' => 'nullable|image|max:4096',
         'title' => 'required|string|min:5|max:50',
         'type' => 'required|string',
         'programming_languages' => 'string|max:500',
         'technologies' => 'string|max:500',
         'description' => 'nullable',
         'project_url' => 'required|url|max:600',
-        //        'image' => 'nullable|image|max:1024'
     ];
 
     private array $validation_messages = [
@@ -62,6 +63,8 @@ class ProjectsController extends Controller {
         $request->validate($this->validations, $this->validation_messages);
         $data = $request->all();
 
+        $imagePath = Storage::put('uploads', $data['image']);
+
         //        $imgPath = Storage::put('uploads', $data['image']);
 
         // get type id (one to many)
@@ -70,6 +73,7 @@ class ProjectsController extends Controller {
         $newProject = new Project();
         $newProject->title = $data['title'];
         $newProject->type_id = $type_id;
+        $newProject->image = $imagePath;
         $newProject->slug = Str::slug($data['title']);
         $newProject->description = $data['description'];
         $newProject->project_url = $data['project_url'];
@@ -149,6 +153,14 @@ class ProjectsController extends Controller {
 
         $request->validate($this->validations, $this->validation_messages);
         $data = $request->all();
+        // if there is image to upload
+        if (isset($data['image'])) {
+            // save new project image
+            $imagePath = Storage::put('uploads', $data['image']);
+            // delete old image if exist
+            Storage::delete($project->image);
+            $project->image = $imagePath;
+        }
 
         // get type id (one to many)
         $type_id = DB::table('types')->where('name', $data['type'])->value('id');

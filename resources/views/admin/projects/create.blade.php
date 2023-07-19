@@ -9,13 +9,23 @@
                     <a href="{{ route('admin.projects.index') }}">
                         <button class="mt-3 btn btn-primary mt-2 mb-4">Back to Projects</button>
                     </a>
-                    <form method="POST" action="{{ route('admin.projects.store') }}">
+                    <form method="POST" action="{{ route('admin.projects.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group mb-3">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
                             @error('title')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Project image:</label>
+                            <input class="form-control" type="file" id="image" name="image">
+                            @error('image')
                                 <div class="text-danger">
                                     {{ $message }}
                                 </div>

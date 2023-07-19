@@ -12,7 +12,7 @@
          data-bs-title="Add new {{ $managingEntity }}">
 
         @if($addableEntity)
-            <div class="ms-3 icon_plus">
+            <div class="icon_plus">
                 <a href="{{ route($createRoot) }}">
                     <i class="fa-sharp fa-solid fa-plus"></i>
                 </a>
